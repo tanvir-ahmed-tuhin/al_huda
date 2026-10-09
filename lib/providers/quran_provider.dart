@@ -22,7 +22,7 @@ class QuranProvider extends ChangeNotifier {
   // Settings & Preferences
   double _arabicFontSize = 24.0;
   bool _showBangla = true;
-  bool _showEnglish = true;
+  bool _showEnglish = false;
   List<BookmarkItem> _bookmarks = [];
   Map<String, dynamic> _lastRead = {'surahNumber': 1, 'ayahNumber': 1, 'surahNameBangla': 'আল-ফাতিহা'};
 

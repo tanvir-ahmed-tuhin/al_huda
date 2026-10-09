@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../providers/task_provider.dart';
 import '../../services/prayer_service.dart';
@@ -16,10 +17,10 @@ class DailyTasksScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('দৈনিক আমল ট্র্যাকার (Tasks)'),
+        title: const Text('দৈনিক আমল ট্র্যাকার'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add_task_rounded, color: AppColors.accentGold),
+            icon: const Icon(IconlyLight.plus, color: AppColors.accentGold),
             tooltip: 'নতুন আমল যোগ করুন',
             onPressed: () => _showAddTaskModal(context, taskProvider, isDark),
           ),
@@ -28,7 +29,7 @@ class DailyTasksScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors.accentGold,
         foregroundColor: Colors.black,
-        icon: const Icon(Icons.add_rounded),
+        icon: const Icon(IconlyBold.plus),
         label: const Text('আমল যোগ করুন', style: TextStyle(fontWeight: FontWeight.bold)),
         onPressed: () => _showAddTaskModal(context, taskProvider, isDark),
       ),
@@ -160,7 +161,7 @@ class DailyTasksScreen extends StatelessWidget {
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.local_fire_department_rounded, size: 14, color: AppColors.accentGold),
+                      Icon(IconlyBold.activity, size: 14, color: AppColors.accentGold),
                       SizedBox(width: 4),
                       Text(
                         'দৈনিক আমল রুটিন',
@@ -274,7 +275,7 @@ class DailyTasksScreen extends StatelessWidget {
               ),
             ),
             child: isDone
-                ? const Icon(Icons.check_rounded, size: 18, color: Colors.white)
+                ? const Icon(IconlyBold.tickSquare, size: 18, color: Colors.white)
                 : null,
           ),
           const SizedBox(width: 14),
@@ -326,7 +327,7 @@ class DailyTasksScreen extends StatelessWidget {
           // Delete custom task option
           if (task.id.length > 10)
             IconButton(
-              icon: const Icon(Icons.delete_outline_rounded, size: 18, color: AppColors.error),
+              icon: const Icon(IconlyLight.delete, size: 18, color: AppColors.error),
               tooltip: 'মুছে ফেলুন',
               onPressed: () => provider.deleteTask(task.id),
             ),
@@ -341,7 +342,7 @@ class DailyTasksScreen extends StatelessWidget {
         padding: const EdgeInsets.all(32),
         child: Column(
           children: [
-            const Icon(Icons.checklist_rounded, size: 54, color: AppColors.accentGold),
+            const Icon(IconlyBold.paper, size: 54, color: AppColors.accentGold),
             const SizedBox(height: 12),
             const Text(
               'এই ক্যাটাগরিতে কোনো আমল নেই',

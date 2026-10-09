@@ -103,6 +103,23 @@ class PrayerTimeModel {
     }
   }
 
+  static String getPrayerNameArabic(PrayerName prayer) {
+    switch (prayer) {
+      case PrayerName.fajr:
+        return 'صلاة الفجر';
+      case PrayerName.sunrise:
+        return 'شروق الشمس';
+      case PrayerName.dhuhr:
+        return 'صلاة الظهر';
+      case PrayerName.asr:
+        return 'صلاة العصر';
+      case PrayerName.maghrib:
+        return 'صلاة المغرب';
+      case PrayerName.isha:
+        return 'صلاة العشاء';
+    }
+  }
+
   static int _toMinutes(TimeOfDay tod) => tod.hour * 60 + tod.minute;
 
   static DateTime _timeOfDayToDateTime(TimeOfDay tod, DateTime baseDate, bool isTomorrow) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/islamic_events_provider.dart';
@@ -66,7 +67,7 @@ class UpcomingIslamicEventCard extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Icon(
-                                  Icons.notifications_active_rounded,
+                                  IconlyBold.notification,
                                   size: 13,
                                   color: AppColors.accentGold,
                                 ),
@@ -180,7 +181,7 @@ class UpcomingIslamicEventCard extends StatelessWidget {
                         ),
                         SizedBox(width: 2),
                         Icon(
-                          Icons.arrow_forward_rounded,
+                          IconlyLight.arrowRight,
                           size: 14,
                           color: Colors.black,
                         ),

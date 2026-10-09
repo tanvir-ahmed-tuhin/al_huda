@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import '../theme/app_theme.dart';
 
 class QiblaCompassDial extends StatelessWidget {
@@ -93,7 +94,7 @@ class QiblaCompassDial extends StatelessWidget {
                 ],
               ),
               child: const Icon(
-                Icons.navigation_rounded,
+                IconlyBold.discovery,
                 color: Colors.white,
                 size: 26,
               ),
@@ -184,18 +185,18 @@ class _CompassDialPainter extends CustomPainter {
 
       canvas.drawLine(startPos, endPos, tickPaint);
 
-      // Draw Cardinal Labels (N, E, S, W)
+      // Draw Cardinal Labels (উ, পূ, দ, প)
       if (isCardinal) {
-        String label = 'N';
+        String label = 'উ';
         Color labelColor = AppColors.error;
         if (deg == 90) {
-          label = 'E';
+          label = 'পূ';
           labelColor = isDark ? Colors.white70 : AppColors.primaryDark;
         } else if (deg == 180) {
-          label = 'S';
+          label = 'দ';
           labelColor = isDark ? Colors.white70 : AppColors.primaryDark;
         } else if (deg == 270) {
-          label = 'W';
+          label = 'প';
           labelColor = isDark ? Colors.white70 : AppColors.primaryDark;
         }
 

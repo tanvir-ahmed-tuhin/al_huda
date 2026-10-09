@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/islamic_special_day_model.dart';
 import '../../providers/islamic_events_provider.dart';
@@ -74,7 +75,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                     right: -20,
                     top: 20,
                     child: Icon(
-                      Icons.nightlight_round,
+                      IconlyBold.star,
                       size: 150,
                       color: AppColors.accentGold.withValues(alpha: 0.12),
                     ),
@@ -143,7 +144,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
             actions: [
               IconButton(
                 icon: Icon(
-                  isNotifEnabled ? Icons.notifications_active_rounded : Icons.notifications_off_outlined,
+                  isNotifEnabled ? IconlyBold.notification : IconlyLight.notification,
                   color: isNotifEnabled ? AppColors.accentGold : Colors.grey,
                 ),
                 tooltip: 'নোটিফিকেশন সেটিংস',
@@ -174,7 +175,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.stars_rounded, color: AppColors.accentGold, size: 20),
+                            const Icon(IconlyBold.star, color: AppColors.accentGold, size: 20),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
@@ -217,7 +218,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                         children: [
                           const Row(
                             children: [
-                              Icon(Icons.menu_book_rounded, color: AppColors.accentGold, size: 20),
+                              Icon(IconlyBold.document, color: AppColors.accentGold, size: 20),
                               SizedBox(width: 8),
                               Text(
                                 'পবিত্র কুরআনের বাণী',
@@ -252,7 +253,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                         children: [
                           const Row(
                             children: [
-                              Icon(Icons.auto_stories_rounded, color: Color(0xFF10B981), size: 20),
+                              Icon(IconlyBold.paper, color: Color(0xFF10B981), size: 20),
                               SizedBox(width: 8),
                               Text(
                                 'সহিহ হাদিসের ফজিলত',
@@ -285,7 +286,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.checklist_rounded, color: AppColors.accentGold, size: 22),
+                          const Icon(IconlyBold.tickSquare, color: AppColors.accentGold, size: 22),
                           const SizedBox(width: 8),
                           const Text(
                             'বিশেষ আমলসমূহ ও আমলনামা',
@@ -358,7 +359,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                         children: [
                           const Row(
                             children: [
-                              Icon(Icons.warning_amber_rounded, color: Colors.redAccent, size: 22),
+                              Icon(IconlyBold.danger, color: Colors.redAccent, size: 22),
                               SizedBox(width: 8),
                               Text(
                                 'বর্জনীয় বিষয় ও বিদআত সতর্কতা',
@@ -441,7 +442,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                     ),
                   ),
                   child: isCompleted
-                      ? const Icon(Icons.check, color: Colors.white, size: 18)
+                      ? const Icon(IconlyBold.tickSquare, color: Colors.white, size: 18)
                       : null,
                 ),
               ),
@@ -519,7 +520,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Icon(Icons.verified_rounded, size: 16, color: AppColors.primary),
+                const Icon(IconlyBold.shieldDone, size: 16, color: AppColors.primary),
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
@@ -601,7 +602,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         visualDensity: VisualDensity.compact,
                       ),
-                      icon: const Icon(Icons.copy_rounded, size: 16, color: AppColors.accentGold),
+                      icon: const Icon(IconlyLight.document, size: 16, color: AppColors.accentGold),
                       label: const Text(
                         'দোয়া কপি করুন',
                         style: TextStyle(fontSize: 12, color: AppColors.accentGold),
@@ -642,7 +643,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      icon: const Icon(Icons.menu_book_rounded, size: 16),
+                      icon: const Icon(IconlyBold.document, size: 16),
                       label: const Text(
                         'সূরা পাঠ করুন',
                         style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
@@ -675,7 +676,7 @@ class IslamicEventDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      icon: const Icon(Icons.fingerprint_rounded, size: 16),
+                      icon: const Icon(IconlyBold.activity, size: 16),
                       label: const Text(
                         'তসবিহ পড়ুন',
                         style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../models/prayer_time_model.dart';
 import '../providers/azan_provider.dart';
@@ -89,7 +90,7 @@ class AzanDialog extends StatelessWidget {
                 ],
               ),
               child: const Icon(
-                Icons.mosque_rounded,
+                IconlyBold.voice,
                 color: Colors.black87,
                 size: 40,
               ),
@@ -175,7 +176,7 @@ class AzanDialog extends StatelessWidget {
                     azanProvider.stopAzan();
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.stop_rounded, size: 20),
+                  icon: const Icon(IconlyBold.closeSquare, size: 20),
                   label: const Text('আযান বন্ধ করুন'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade700,
@@ -197,7 +198,7 @@ class AzanDialog extends StatelessWidget {
                     }
                   },
                   icon: Icon(
-                    azanProvider.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                    azanProvider.isPlaying ? IconlyBold.video : IconlyBold.play,
                     color: AppColors.accentGold,
                   ),
                   label: Text(
@@ -236,7 +237,7 @@ class AzanDialog extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.auto_awesome, color: AppColors.accentGold, size: 18),
+                      const Icon(IconlyBold.star, color: AppColors.accentGold, size: 18),
                       const SizedBox(width: 6),
                       Text(
                         'আযানের পরের দোয়া',

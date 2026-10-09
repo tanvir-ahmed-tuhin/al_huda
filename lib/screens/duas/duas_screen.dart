@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import '../../services/duas_data.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
@@ -48,7 +49,7 @@ class DuasScreen extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.copy_rounded, size: 18, color: AppColors.accentGold),
+                      icon: const Icon(IconlyLight.document, size: 18, color: AppColors.accentGold),
                       tooltip: 'দোয়া কপি করুন',
                       onPressed: () {
                         Clipboard.setData(

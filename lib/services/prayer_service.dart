@@ -134,23 +134,21 @@ class PrayerService {
     return "$hijriDay $monthName, $hijriYear হিজরি";
   }
 
-  /// Formats TimeOfDay to Bengali string (e.g. "০৫:২০ AM")
+  /// Formats TimeOfDay to Bengali string (e.g. "০৫:২০")
   static String formatTimeOfDayBangla(TimeOfDay tod, {bool use12Hours = true}) {
     int hour = tod.hour;
     final int minute = tod.minute;
-    String period = '';
 
     if (use12Hours) {
-      period = hour >= 12 ? ' PM' : ' AM';
       hour = hour % 12;
       if (hour == 0) hour = 12;
     }
 
     final hourStr = hour.toString().padLeft(2, '0');
     final minStr = minute.toString().padLeft(2, '0');
-    final formattedEnglish = '$hourStr:$minStr$period';
+    final formatted = '$hourStr:$minStr';
 
-    return toBanglaDigits(formattedEnglish);
+    return toBanglaDigits(formatted);
   }
 
   static String toBanglaDigits(String input) {

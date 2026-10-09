@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/prayer_time_model.dart';
 import '../../providers/azan_provider.dart';
@@ -24,7 +25,33 @@ class PrayerTimesScreen extends StatelessWidget {
         title: const Text('নামাজের সময়সূচি'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.campaign_rounded, color: AppColors.accentGold),
+            icon: prayerProvider.isLoadingLocation
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accentGold),
+                  )
+                : Icon(
+                    prayerProvider.isLiveLocation ? IconlyBold.location : IconlyLight.location,
+                    color: prayerProvider.isLiveLocation ? const Color(0xFF10B981) : AppColors.accentGold,
+                  ),
+            tooltip: 'GPS লোকেশন সনাক্ত করুন',
+            onPressed: () async {
+              final ok = await prayerProvider.fetchLiveLocation(requestPermission: true);
+              if (!context.mounted) return;
+              if (ok) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('লোকেশন আপডেট হয়েছে: ${prayerProvider.currentLocationName}'),
+                    backgroundColor: AppColors.primary,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+          ),
+          IconButton(
+            icon: const Icon(IconlyBold.voice, color: AppColors.accentGold),
             tooltip: 'আযানের কণ্ঠ ও সেটিংস',
             onPressed: () {
               Navigator.push(
@@ -75,13 +102,14 @@ class PrayerTimesScreen extends StatelessWidget {
     return IslamicCard(
       padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  const Icon(Icons.calendar_month_rounded, color: AppColors.accentGold, size: 20),
+                  const Icon(IconlyBold.calendar, color: AppColors.accentGold, size: 20),
                   const SizedBox(width: 8),
                   Text(
                     pt.hijriDate,
@@ -89,13 +117,101 @@ class PrayerTimesScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
+              // Live GPS Location Action Chip
+              InkWell(
+                onTap: provider.isLoadingLocation
+                    ? null
+                    : () async {
+                        final ok = await provider.fetchLiveLocation(requestPermission: true);
+                        if (!context.mounted) return;
+                        if (!ok && provider.locationStatusMessage != null) {
+                          if (provider.locationStatusMessage!.contains('GPS')) {
+                            await provider.openLocationSettings();
+                          } else if (provider.locationStatusMessage!.contains('সেটিংসে')) {
+                            await provider.openAppSettings();
+                          }
+                        }
+                      },
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: provider.isLiveLocation
+                        ? const Color(0xFF10B981).withValues(alpha: 0.2)
+                        : AppColors.accentGold.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: provider.isLiveLocation ? const Color(0xFF10B981) : AppColors.accentGold,
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (provider.isLoadingLocation)
+                        const SizedBox(
+                          width: 12,
+                          height: 12,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.accentGold),
+                        )
+                      else
+                        Icon(
+                          provider.isLiveLocation ? IconlyBold.location : IconlyLight.location,
+                          size: 14,
+                          color: provider.isLiveLocation ? const Color(0xFF10B981) : AppColors.accentGold,
+                        ),
+                      const SizedBox(width: 5),
+                      const Text(
+                        'GPS লোকেশন',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.accentGold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+          const Divider(height: 1),
+          const SizedBox(height: 10),
+
+          // Location details & manual city dropdown
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      provider.currentLocationName,
+                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${PrayerService.toBanglaDigits(provider.currentLatitude.toStringAsFixed(2))}° N, ${PrayerService.toBanglaDigits(provider.currentLongitude.toStringAsFixed(2))}° E',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               DropdownButtonHideUnderline(
                 child: DropdownButton<CityLocation>(
-                  value: QiblaService.defaultCities.contains(provider.selectedCity)
+                  value: !provider.isLiveLocation && QiblaService.defaultCities.contains(provider.selectedCity)
                       ? provider.selectedCity
                       : null,
-                  hint: Text(provider.selectedCity.nameBangla, style: const TextStyle(fontSize: 12)),
-                  icon: const Icon(Icons.arrow_drop_down, color: AppColors.accentGold),
+                  hint: const Text('জেলা পরিবর্তন', style: TextStyle(fontSize: 12, color: AppColors.accentGold)),
+                  icon: const Icon(IconlyLight.arrowDown2, color: AppColors.accentGold, size: 16),
                   dropdownColor: isDark ? AppColors.darkCardElevated : Colors.white,
                   items: QiblaService.defaultCities.map((city) {
                     return DropdownMenuItem<CityLocation>(
@@ -112,6 +228,29 @@ class PrayerTimesScreen extends StatelessWidget {
               ),
             ],
           ),
+
+          if (provider.locationStatusMessage != null) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.orange.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  const Icon(IconlyBold.danger, color: Colors.orange, size: 14),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      provider.locationStatusMessage!,
+                      style: const TextStyle(fontSize: 11, color: Colors.orange),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -209,7 +348,7 @@ class PrayerTimesScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              Icons.campaign_rounded,
+              IconlyBold.voice,
               color: azanProvider.isMasterEnabled ? AppColors.accentGold : Colors.grey,
               size: 24,
             ),
@@ -263,7 +402,7 @@ class PrayerTimesScreen extends StatelessWidget {
           const SizedBox(width: 6),
           IconButton(
             icon: Icon(
-              azanProvider.isPlaying ? Icons.stop_circle_rounded : Icons.play_circle_fill_rounded,
+              azanProvider.isPlaying ? IconlyBold.video : IconlyBold.play,
               color: AppColors.accentGold,
               size: 30,
             ),
@@ -277,7 +416,7 @@ class PrayerTimesScreen extends StatelessWidget {
               }
             },
           ),
-          const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.grey),
+          const Icon(IconlyLight.arrowRight2, size: 14, color: Colors.grey),
         ],
       ),
     );
@@ -285,12 +424,12 @@ class PrayerTimesScreen extends StatelessWidget {
 
   Widget _buildPrayerList(BuildContext context, PrayerTimeModel pt, bool isDark) {
     final prayers = [
-      {'prayer': PrayerName.fajr, 'icon': Icons.nights_stay_rounded},
-      {'prayer': PrayerName.sunrise, 'icon': Icons.wb_sunny_rounded},
-      {'prayer': PrayerName.dhuhr, 'icon': Icons.wb_sunny_outlined},
-      {'prayer': PrayerName.asr, 'icon': Icons.wb_cloudy_rounded},
-      {'prayer': PrayerName.maghrib, 'icon': Icons.wb_twilight_rounded},
-      {'prayer': PrayerName.isha, 'icon': Icons.bedtime_rounded},
+      {'prayer': PrayerName.fajr, 'icon': IconlyBold.timeCircle},
+      {'prayer': PrayerName.sunrise, 'icon': IconlyBold.star},
+      {'prayer': PrayerName.dhuhr, 'icon': IconlyBold.star},
+      {'prayer': PrayerName.asr, 'icon': IconlyLight.timeCircle},
+      {'prayer': PrayerName.maghrib, 'icon': IconlyLight.star},
+      {'prayer': PrayerName.isha, 'icon': IconlyBold.timeCircle},
     ];
 
     final currentPrayer = pt.currentOrNextPrayer;
@@ -300,7 +439,7 @@ class PrayerTimesScreen extends StatelessWidget {
         final prayer = item['prayer'] as PrayerName;
         final icon = item['icon'] as IconData;
         final name = PrayerTimeModel.getPrayerNameBangla(prayer);
-        final englishName = PrayerTimeModel.getPrayerNameEnglish(prayer);
+        final arabicName = PrayerTimeModel.getPrayerNameArabic(prayer);
         final timeStr = PrayerService.formatTimeOfDayBangla(pt.getTimeForPrayer(prayer));
         final isCurrent = prayer == currentPrayer;
 
@@ -357,9 +496,10 @@ class PrayerTimesScreen extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            englishName,
+                            arabicName,
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 12,
+                              fontFamily: 'Amiri',
                               color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
                             ),
                             maxLines: 1,
@@ -425,7 +565,7 @@ class PrayerTimesScreen extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Column(
               children: [
-                const Icon(Icons.nightlight_outlined, color: AppColors.accentGold, size: 22),
+                const Icon(IconlyLight.star, color: AppColors.accentGold, size: 22),
                 const SizedBox(height: 4),
                 const Text('সাহরীর শেষ সময়', style: TextStyle(fontSize: 12)),
                 const SizedBox(height: 2),
@@ -443,7 +583,7 @@ class PrayerTimesScreen extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Column(
               children: [
-                const Icon(Icons.wb_twilight_rounded, color: AppColors.accentGold, size: 22),
+                const Icon(IconlyBold.star, color: AppColors.accentGold, size: 22),
                 const SizedBox(height: 4),
                 const Text('ইফতারের সময়', style: TextStyle(fontSize: 12)),
                 const SizedBox(height: 2),

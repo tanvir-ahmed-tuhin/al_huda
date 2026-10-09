@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/surah_model.dart';
 import '../../providers/quran_provider.dart';
@@ -55,7 +56,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
           children: [
             Text(widget.surah.nameBangla),
             Text(
-              '${widget.surah.nameEnglish} • ${widget.surah.revelationTypeBangla}',
+              '${widget.surah.meaningBangla} • ${widget.surah.revelationTypeBangla}',
               style: TextStyle(
                 fontSize: 11,
                 color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
@@ -65,7 +66,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.format_size_rounded, color: AppColors.accentGold),
+            icon: const Icon(IconlyLight.setting, color: AppColors.accentGold),
             tooltip: 'ফন্ট ও অনুবাদ সেটিং',
             onPressed: () => _showSettingsModal(context, quranProvider, isDark),
           ),
@@ -277,9 +278,9 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     icon: Icon(
                       isPlaying
                           ? (quranProvider.isPlaying
-                              ? Icons.pause_circle_filled_rounded
-                              : Icons.play_circle_fill_rounded)
-                          : Icons.play_circle_outline_rounded,
+                              ? IconlyBold.video
+                              : IconlyBold.play)
+                          : IconlyLight.play,
                       color: isPlaying ? AppColors.accentGold : (isDark ? Colors.white70 : AppColors.primary),
                       size: 22,
                     ),
@@ -288,7 +289,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                   ),
                   IconButton(
                     icon: Icon(
-                      isBookmarked ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+                      isBookmarked ? IconlyBold.bookmark : IconlyLight.bookmark,
                       color: isBookmarked ? AppColors.accentGold : (isDark ? Colors.white70 : AppColors.primary),
                       size: 22,
                     ),
@@ -311,7 +312,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.copy_rounded,
+                      IconlyLight.document,
                       color: isDark ? Colors.white70 : AppColors.primary,
                       size: 20,
                     ),
@@ -421,7 +422,7 @@ class _SurahDetailScreenState extends State<SurahDetailScreen> {
                     children: [
                       const Text('আরবি ফন্ট সাইজ'),
                       Text(
-                        '${quranProvider.arabicFontSize.round()} pt',
+                        '${PrayerService.toBanglaDigits(quranProvider.arabicFontSize.round().toString())} পিটি',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.accentGold,

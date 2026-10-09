@@ -30,6 +30,25 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Sign In with Google and save/sync with Firestore
+  Future<bool> signInWithGoogle() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      _currentUser = await AuthService.signInWithGoogle();
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _errorMessage = e.toString();
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   Future<bool> login({required String email, required String password}) async {
     _isLoading = true;
     _errorMessage = null;
@@ -70,13 +89,20 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> continueAsGuest() async {
+  Future<void> refreshUser() async {
+    _currentUser = await AuthService.getCurrentUser();
+    notifyListeners();
+  }
+
+  /// Explicit sync with Firestore
+  Future<bool> syncWithFirestore() async {
     _isLoading = true;
     notifyListeners();
-
-    _currentUser = await AuthService.continueAsGuest();
+    final success = await AuthService.syncCurrentUserToFirestore();
+    _currentUser = await AuthService.getCurrentUser();
     _isLoading = false;
     notifyListeners();
+    return success;
   }
 
   Future<void> logout() async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../models/azan_voice_model.dart';
 import '../models/prayer_time_model.dart';
@@ -65,7 +66,7 @@ class AzanFloatingBar extends StatelessWidget {
                     border: Border.all(color: AppColors.accentGold, width: 1),
                   ),
                   child: const Icon(
-                    Icons.mosque_rounded,
+                    IconlyBold.voice,
                     color: AppColors.accentGold,
                     size: 22,
                   ),
@@ -122,7 +123,7 @@ class AzanFloatingBar extends StatelessWidget {
 
                 // Dua / Details button
                 IconButton(
-                  icon: const Icon(Icons.menu_book_rounded, color: AppColors.goldLight, size: 20),
+                  icon: const Icon(IconlyBold.document, color: AppColors.goldLight, size: 20),
                   tooltip: 'আযানের দোয়া দেখুন',
                   onPressed: () => AzanDialog.show(context),
                 ),
@@ -138,7 +139,7 @@ class AzanFloatingBar extends StatelessWidget {
                       color: Colors.red.shade800,
                     ),
                     child: const Icon(
-                      Icons.stop_rounded,
+                      IconlyBold.closeSquare,
                       color: Colors.white,
                       size: 20,
                     ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_islamic_icons/flutter_islamic_icons.dart';
 import '../theme/app_theme.dart';
 import '../widgets/audio_player_bar.dart';
 import '../widgets/azan_floating_bar.dart';
@@ -7,7 +10,6 @@ import 'quran/surah_list_screen.dart';
 import 'qibla/qibla_screen.dart';
 import 'tasks/daily_tasks_screen.dart';
 import 'more/more_screen.dart';
-import 'package:hugeicons/hugeicons.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -35,11 +37,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       const MoreScreen(),
     ];
 
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: screens,
-      ),
+    final overlayStyle = SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: isDark ? AppColors.darkSurface : Colors.white,
+      systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+    );
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: overlayStyle,
+      child: Scaffold(
+        body: IndexedStack(
+          index: _currentIndex,
+          children: screens,
+        ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -79,28 +91,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               elevation: 0,
               destinations: const [
                 NavigationDestination(
-                  icon: Icon(Icons.home_outlined),
-                  selectedIcon: Icon(Icons.home_rounded, color: AppColors.accentGold),
+                  icon: Icon(IconlyLight.home),
+                  selectedIcon: Icon(IconlyBold.home, color: AppColors.accentGold),
                   label: 'হোম',
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.menu_book_outlined),
-                  selectedIcon: Icon(Icons.menu_book_rounded, color: AppColors.accentGold),
+                  icon: Icon(FlutterIslamicIcons.quran),
+                  selectedIcon: Icon(FlutterIslamicIcons.solidQuran, color: AppColors.accentGold),
                   label: 'কুরআন',
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.explore_outlined),
-                  selectedIcon: Icon(Icons.explore_rounded, color: AppColors.accentGold),
+                  icon: Icon(FlutterIslamicIcons.qibla),
+                  selectedIcon: Icon(FlutterIslamicIcons.solidKaaba, color: AppColors.accentGold),
                   label: 'ক্বিবলা',
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.task_alt_outlined),
-                  selectedIcon: Icon(Icons.task_alt_rounded, color: AppColors.accentGold),
+                  icon: Icon(IconlyLight.tickSquare),
+                  selectedIcon: Icon(IconlyBold.tickSquare, color: AppColors.accentGold),
                   label: 'আমল',
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.widgets_outlined),
-                  selectedIcon: Icon(Icons.widgets_rounded, color: AppColors.accentGold),
+                  icon: Icon(IconlyLight.category),
+                  selectedIcon: Icon(IconlyBold.category, color: AppColors.accentGold),
                   label: 'অন্যান্য',
                 ),
               ],
@@ -108,6 +120,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

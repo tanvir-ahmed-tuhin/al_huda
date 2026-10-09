@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../providers/islamic_events_provider.dart';
 import '../../services/prayer_service.dart';
@@ -24,7 +25,7 @@ class IslamicEventsScreen extends StatelessWidget {
         title: const Text('ইসলামিক বিশেষ দিন ও আমল'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_active_rounded, color: AppColors.accentGold),
+            icon: const Icon(IconlyBold.notification, color: AppColors.accentGold),
             tooltip: 'নোটিফিকেশন ও অ্যালার্ট সেটিংস',
             onPressed: () {
               showModalBottomSheet(
@@ -70,7 +71,7 @@ class IslamicEventsScreen extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.notifications_active_rounded,
+                    IconlyBold.notification,
                     color: AppColors.accentGold,
                     size: 22,
                   ),
@@ -96,7 +97,7 @@ class IslamicEventsScreen extends StatelessWidget {
                     ),
                   ),
                   const Icon(
-                    Icons.settings_outlined,
+                    IconlyLight.setting,
                     size: 18,
                     color: AppColors.accentGold,
                   ),
@@ -199,7 +200,7 @@ class IslamicEventsScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.star_rounded, size: 14, color: AppColors.goldLight),
+                    const Icon(IconlyBold.star, size: 14, color: AppColors.goldLight),
                     const SizedBox(width: 4),
                     Text(
                       nextEvent.isToday ? 'আজকের বিশেষ দিন' : 'আসন্ন প্রধান দিন',
@@ -268,7 +269,7 @@ class IslamicEventsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+              icon: const Icon(IconlyLight.arrowRight, size: 18),
               label: const Text(
                 'বিশেষ আমল ও করণীয় দেখুন',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
@@ -400,7 +401,7 @@ class IslamicEventsScreen extends StatelessWidget {
                 ),
               ),
               const Icon(
-                Icons.arrow_forward_ios_rounded,
+                IconlyLight.arrowRight2,
                 size: 15,
                 color: AppColors.accentGold,
               ),
@@ -414,7 +415,7 @@ class IslamicEventsScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.playlist_add_check_rounded, size: 16, color: AppColors.accentGold),
+                  const Icon(IconlyBold.tickSquare, size: 16, color: AppColors.accentGold),
                   const SizedBox(width: 4),
                   Text(
                     '${PrayerService.toBanglaDigits(event.amals.length.toString())}টি বিশেষ আমল ও দোয়া',
@@ -441,7 +442,7 @@ class IslamicEventsScreen extends StatelessWidget {
                 ],
               ),
               Icon(
-                isNotifOn ? Icons.notifications_active_rounded : Icons.notifications_off_outlined,
+                isNotifOn ? IconlyBold.notification : IconlyLight.notification,
                 size: 16,
                 color: isNotifOn ? AppColors.accentGold : Colors.grey,
               ),

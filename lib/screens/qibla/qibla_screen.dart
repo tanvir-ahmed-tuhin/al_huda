@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/qibla_provider.dart';
@@ -48,11 +49,11 @@ class _QiblaScreenState extends State<QiblaScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ক্বিবলা কম্পাস (Qibla)'),
+        title: const Text('ক্বিবলা কম্পাস'),
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.my_location_rounded,
+              IconlyBold.location,
               color: AppColors.accentGold,
             ),
             tooltip: 'জিপিএস লোকেশন সনাক্ত করুন',
@@ -212,7 +213,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Icon(
-                    Icons.info_outline_rounded,
+                    IconlyLight.infoSquare,
                     color: AppColors.accentGold,
                     size: 22,
                   ),
@@ -277,7 +278,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                             );
                           },
                           icon: const Icon(
-                            Icons.check_circle_rounded,
+                            IconlyBold.tickSquare,
                             size: 18,
                           ),
                           label: const Text('ক্বিবলার দিকে সেট করুন'),
@@ -321,7 +322,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
             child: Row(
               children: [
                 const Icon(
-                  Icons.location_city_rounded,
+                  IconlyBold.discovery,
                   color: AppColors.accentGold,
                   size: 20,
                 ),
@@ -334,7 +335,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
-                        'নির্বাচিত শহর',
+                        'নির্বাচিত জেলা',
                         style: TextStyle(
                           fontSize: 11,
                           color: AppColors.accentGold,
@@ -360,7 +361,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
           const SizedBox(width: 8),
 
           // --------------------------------
-          // CITY DROPDOWN
+          // DISTRICT DROPDOWN
           // --------------------------------
           Expanded(
             flex: 4,
@@ -376,14 +377,14 @@ class _QiblaScreenState extends State<QiblaScreen> {
                     : null,
 
                 hint: const Text(
-                  'শহর পরিবর্তন',
+                  'জেলা পরিবর্তন',
                   style: TextStyle(fontSize: 12),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
 
                 icon: const Icon(
-                  Icons.keyboard_arrow_down_rounded,
+                  IconlyLight.arrowDown2,
                   color: AppColors.accentGold,
                   size: 22,
                 ),
@@ -447,7 +448,7 @@ class _QiblaScreenState extends State<QiblaScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            isFacing ? Icons.check_circle_rounded : Icons.explore_rounded,
+            isFacing ? IconlyBold.tickSquare : IconlyBold.discovery,
 
             color: isFacing ? AppColors.qiblaActive : AppColors.accentGold,
 

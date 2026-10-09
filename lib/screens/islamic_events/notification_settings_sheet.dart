@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/islamic_special_day_model.dart';
 import '../../providers/islamic_events_provider.dart';
@@ -51,7 +52,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.notifications_active_rounded,
+                  IconlyBold.notification,
                   color: AppColors.accentGold,
                   size: 24,
                 ),
@@ -89,7 +90,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
             child: Row(
               children: [
                 const Icon(
-                  Icons.power_settings_new_rounded,
+                  IconlyBold.shieldDone,
                   color: AppColors.primary,
                   size: 24,
                 ),
@@ -143,7 +144,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
               child: Column(
                 children: [
                   _buildToggleTile(
-                    icon: Icons.calendar_month_rounded,
+                    icon: IconlyBold.calendar,
                     title: '৩ দিন আগে অগ্রিম নোটিফিকেশন',
                     subtitle: 'যাতে মানসিক ও আমলি প্রস্তুতি নিতে পারেন',
                     value: provider.notify3DaysBefore,
@@ -151,7 +152,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
                   ),
                   const Divider(height: 1),
                   _buildToggleTile(
-                    icon: Icons.timer_outlined,
+                    icon: IconlyBold.timeCircle,
                     title: '১ দিন আগে (সন্ধ্যায়) নোটিফিকেশন',
                     subtitle: 'মাগরিবের পর বরকতময় রাত শুরু হওয়ার পূর্বে অ্যালার্ট',
                     value: provider.notify1DayBefore,
@@ -159,7 +160,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
                   ),
                   const Divider(height: 1),
                   _buildToggleTile(
-                    icon: Icons.wb_sunny_rounded,
+                    icon: IconlyBold.star,
                     title: 'বিশেষ দিনের সকালে রিমাইন্ডার',
                     subtitle: 'সকালে ফজরের পর আজকের বিশেষ আমলসমূহ স্মরণ করিয়ে দিবে',
                     value: provider.notifyOnDayMorning,
@@ -182,7 +183,7 @@ class IslamicNotificationSettingsSheet extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(
-                    Icons.cell_tower_rounded,
+                    IconlyBold.volumeUp,
                     color: AppColors.accentGold,
                     size: 26,
                   ),

@@ -109,11 +109,18 @@ class QiblaProvider extends ChangeNotifier {
     try {
       final position = await QiblaService.getCurrentPosition();
       if (position != null) {
+        final nearest = QiblaService.findNearestCity(position.latitude, position.longitude);
         _selectedCity = CityLocation(
-          nameBangla: 'আমার বর্তমান অবস্থান',
-          nameEnglish: 'Current Location',
+          nameBangla: nearest.nameBangla,
+          nameEnglish: nearest.nameEnglish,
           latitude: position.latitude,
           longitude: position.longitude,
+        );
+        await StorageService.saveLiveLocationState(
+          isLive: true,
+          latitude: position.latitude,
+          longitude: position.longitude,
+          locationName: _selectedCity.nameBangla,
         );
         _calculateAngles();
       }

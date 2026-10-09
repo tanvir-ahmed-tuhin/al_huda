@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../providers/quran_provider.dart';
 import '../theme/app_theme.dart';
@@ -54,7 +55,7 @@ class AudioPlayerBar extends StatelessWidget {
                   ),
                 ),
                 child: const Icon(
-                  Icons.audiotrack_rounded,
+                  IconlyBold.voice,
                   color: AppColors.accentGold,
                   size: 22,
                 ),
@@ -89,7 +90,7 @@ class AudioPlayerBar extends StatelessWidget {
 
               // Player Controls: Previous
               IconButton(
-                icon: const Icon(Icons.skip_previous_rounded, size: 24),
+                icon: const Icon(IconlyLight.arrowLeft2, size: 24),
                 onPressed: currentIndex > 0 ? () => quranProvider.playPreviousAyah() : null,
                 tooltip: 'পূর্ববর্তী আয়াত',
               ),
@@ -111,8 +112,8 @@ class AudioPlayerBar extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     quranProvider.isPlaying
-                        ? Icons.pause_circle_filled_rounded
-                        : Icons.play_circle_fill_rounded,
+                        ? IconlyBold.video
+                        : IconlyBold.play,
                     size: 36,
                     color: AppColors.accentGold,
                   ),
@@ -122,7 +123,7 @@ class AudioPlayerBar extends StatelessWidget {
 
               // Next
               IconButton(
-                icon: const Icon(Icons.skip_next_rounded, size: 24),
+                icon: const Icon(IconlyLight.arrowRight2, size: 24),
                 onPressed: currentIndex + 1 < quranProvider.currentAyahs.length
                     ? () => quranProvider.playNextAyahManual()
                     : null,
@@ -131,7 +132,7 @@ class AudioPlayerBar extends StatelessWidget {
 
               // Close / Stop
               IconButton(
-                icon: const Icon(Icons.close_rounded, size: 20),
+                icon: const Icon(IconlyLight.closeSquare, size: 20),
                 onPressed: () => quranProvider.stopAudio(),
                 tooltip: 'বন্ধ করুন',
               ),

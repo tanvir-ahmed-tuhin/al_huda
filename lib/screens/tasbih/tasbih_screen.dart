@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../providers/tasbih_provider.dart';
 import '../../services/prayer_service.dart';
@@ -23,18 +24,18 @@ class TasbihScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ডিজিটাল তসবিহ (Tasbih)'),
+        title: const Text('ডিজিটাল তসবিহ'),
         actions: [
           IconButton(
             icon: Icon(
-              tasbih.vibrationEnabled ? Icons.vibration_rounded : Icons.smartphone_rounded,
+              tasbih.vibrationEnabled ? IconlyBold.activity : IconlyLight.activity,
               color: AppColors.accentGold,
             ),
             tooltip: tasbih.vibrationEnabled ? 'ভাইব্রেশন চালু' : 'ভাইব্রেশন বন্ধ',
             onPressed: () => tasbih.toggleVibration(),
           ),
           IconButton(
-            icon: const Icon(Icons.refresh_rounded, color: AppColors.accentGold),
+            icon: const Icon(IconlyLight.swap, color: AppColors.accentGold),
             tooltip: 'রিসেট করুন',
             onPressed: () => _confirmReset(context, tasbih),
           ),
@@ -70,7 +71,7 @@ class TasbihScreen extends StatelessWidget {
                   children: [
                     const Row(
                       children: [
-                        Icon(Icons.history_rounded, color: AppColors.accentGold, size: 20),
+                        Icon(IconlyBold.timeCircle, color: AppColors.accentGold, size: 20),
                         SizedBox(width: 8),
                         Text('মোট পঠিত তাসবিহ', style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
@@ -115,7 +116,7 @@ class TasbihScreen extends StatelessWidget {
               DropdownButtonHideUnderline(
                 child: DropdownButton<int>(
                   value: tasbih.selectedPresetIndex,
-                  icon: const Icon(Icons.arrow_drop_down, color: AppColors.accentGold),
+                  icon: const Icon(IconlyLight.arrowDown2, color: AppColors.accentGold, size: 18),
                   dropdownColor: isDark ? AppColors.darkCardElevated : Colors.white,
                   items: List.generate(TasbihProvider.presets.length, (index) {
                     final p = TasbihProvider.presets[index];
@@ -265,7 +266,7 @@ class TasbihScreen extends StatelessWidget {
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.touch_app_rounded, size: 14, color: AppColors.accentGold),
+                          Icon(IconlyBold.activity, size: 14, color: AppColors.accentGold),
                           SizedBox(width: 4),
                           Text(
                             'ট্যাপ করুন',
@@ -295,8 +296,8 @@ class TasbihScreen extends StatelessWidget {
         // Reset Button directly near tap counter
         ElevatedButton.icon(
           onPressed: () => _confirmReset(context, tasbih),
-          icon: const Icon(Icons.refresh_rounded, size: 18, color: Colors.white),
-          label: const Text('রিসেট (Reset)'),
+          icon: const Icon(IconlyLight.swap, size: 18, color: Colors.white),
+          label: const Text('রিসেট'),
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFFC0392B),
             foregroundColor: Colors.white,
@@ -312,7 +313,7 @@ class TasbihScreen extends StatelessWidget {
         // Count +1 Direct Button
         ElevatedButton.icon(
           onPressed: () => tasbih.increment(),
-          icon: const Icon(Icons.add_circle_outline_rounded, size: 18, color: Colors.black),
+          icon: const Icon(IconlyBold.plus, size: 18, color: Colors.black),
           label: const Text('গণনা (+১)'),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.accentGold,
@@ -381,7 +382,7 @@ class TasbihScreen extends StatelessWidget {
         return AlertDialog(
           title: const Row(
             children: [
-              Icon(Icons.refresh_rounded, color: AppColors.accentGold),
+              Icon(IconlyBold.swap, color: AppColors.accentGold),
               SizedBox(width: 8),
               Text('তসবিহ রিসেট'),
             ],

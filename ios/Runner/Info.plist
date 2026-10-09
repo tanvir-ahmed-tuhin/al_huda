@@ -59,6 +59,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>সঠিক নামাজের সময় ও ক্বিবলার দিক নির্ধারণের জন্য আপনার লাইভ লোকেশন প্রয়োজন।</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>সঠিক নামাজের সময় ও ক্বিবলার দিক নির্ধারণের জন্য আপনার লাইভ লোকেশন প্রয়োজন।</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

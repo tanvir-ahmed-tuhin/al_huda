@@ -1,1 +1,27 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"al-quran-app-7842","appId":"1:447924255810:android:9a1fee4e506ea8cc0d41db","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"al-quran-app-7842","configurations":{"android":"1:447924255810:android:9a1fee4e506ea8cc0d41db","ios":"1:447924255810:ios:6b24cff18a8af2390d41db","web":"1:447924255810:web:4e3fae1d4617b3200d41db","windows":"1:447924255810:web:3272a19bfb33ed140d41db"}}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "al-quran-app-7842",
+          "appId": "1:447924255810:android:9a1fee4e506ea8cc0d41db",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "al-quran-app-7842",
+          "configurations": {
+            "android": "1:447924255810:android:9a1fee4e506ea8cc0d41db",
+            "ios": "1:447924255810:ios:6b24cff18a8af2390d41db",
+            "web": "1:447924255810:web:4e3fae1d4617b3200d41db",
+            "windows": "1:447924255810:web:3272a19bfb33ed140d41db"
+          }
+        }
+      }
+    }
+  }
+}

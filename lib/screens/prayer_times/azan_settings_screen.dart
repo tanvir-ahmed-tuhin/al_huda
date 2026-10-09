@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/azan_voice_model.dart';
 import '../../models/prayer_time_model.dart';
@@ -25,7 +26,7 @@ class AzanSettingsScreen extends StatelessWidget {
         title: const Text('আযানের কণ্ঠ ও সেটিংস'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.info_outline_rounded, color: AppColors.accentGold),
+            icon: const Icon(IconlyLight.infoSquare, color: AppColors.accentGold),
             tooltip: 'আযানের ফজিলত',
             onPressed: () => _showHadithDialog(context, isDark),
           ),
@@ -53,7 +54,7 @@ class AzanSettingsScreen extends StatelessWidget {
           // Voice Selection Header
           Row(
             children: [
-              const Icon(Icons.record_voice_over_rounded, color: AppColors.accentGold, size: 22),
+              const Icon(IconlyBold.voice, color: AppColors.accentGold, size: 22),
               const SizedBox(width: 8),
               const Text(
                 'আযানের সুললিত কণ্ঠ নির্বাচন',
@@ -108,8 +109,8 @@ class AzanSettingsScreen extends StatelessWidget {
                 ),
                 child: Icon(
                   azanProvider.isMasterEnabled
-                      ? Icons.notifications_active_rounded
-                      : Icons.notifications_off_rounded,
+                      ? IconlyBold.notification
+                      : IconlyLight.notification,
                   color: azanProvider.isMasterEnabled
                       ? AppColors.accentGold
                       : (isDark ? Colors.white54 : Colors.grey),
@@ -154,7 +155,7 @@ class AzanSettingsScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(Icons.volume_up_rounded, size: 20, color: AppColors.accentGold),
+                const Icon(IconlyBold.volumeUp, size: 20, color: AppColors.accentGold),
                 const SizedBox(width: 10),
                 const Text('আযানের ভলিউম', style: TextStyle(fontSize: 13)),
                 Expanded(
@@ -226,7 +227,7 @@ class AzanSettingsScreen extends StatelessWidget {
                   border: Border.all(color: AppColors.accentGold, width: 1),
                 ),
                 child: const Icon(
-                  Icons.mosque_rounded,
+                  IconlyBold.voice,
                   color: AppColors.accentGold,
                   size: 26,
                 ),
@@ -277,7 +278,7 @@ class AzanSettingsScreen extends StatelessWidget {
                     }
                   },
                   icon: Icon(
-                    isPlayingActiveVoice ? Icons.stop_rounded : Icons.play_circle_filled_rounded,
+                    isPlayingActiveVoice ? IconlyBold.video : IconlyBold.play,
                     color: Colors.black87,
                     size: 22,
                   ),
@@ -302,7 +303,7 @@ class AzanSettingsScreen extends StatelessWidget {
                 const SizedBox(width: 10),
                 IconButton(
                   onPressed: () => AzanDialog.show(context),
-                  icon: const Icon(Icons.open_in_full_rounded, color: AppColors.goldLight),
+                  icon: const Icon(IconlyLight.show, color: AppColors.goldLight),
                   tooltip: 'আযান স্ক্রিন খুলুন',
                 ),
               ],
@@ -320,11 +321,11 @@ class AzanSettingsScreen extends StatelessWidget {
     bool isDark,
   ) {
     final prayers = [
-      {'key': 'fajr', 'name': 'ফজর', 'icon': Icons.nights_stay_rounded, 'tod': pt?.fajr},
-      {'key': 'dhuhr', 'name': 'যোহর', 'icon': Icons.wb_sunny_outlined, 'tod': pt?.dhuhr},
-      {'key': 'asr', 'name': 'আসর', 'icon': Icons.wb_cloudy_rounded, 'tod': pt?.asr},
-      {'key': 'maghrib', 'name': 'মাগরিব', 'icon': Icons.wb_twilight_rounded, 'tod': pt?.maghrib},
-      {'key': 'isha', 'name': 'ইশা', 'icon': Icons.bedtime_rounded, 'tod': pt?.isha},
+      {'key': 'fajr', 'name': 'ফজর', 'icon': IconlyBold.timeCircle, 'tod': pt?.fajr},
+      {'key': 'dhuhr', 'name': 'যোহর', 'icon': IconlyBold.star, 'tod': pt?.dhuhr},
+      {'key': 'asr', 'name': 'আসর', 'icon': IconlyLight.timeCircle, 'tod': pt?.asr},
+      {'key': 'maghrib', 'name': 'মাগরিব', 'icon': IconlyLight.star, 'tod': pt?.maghrib},
+      {'key': 'isha', 'name': 'ইশা', 'icon': IconlyBold.timeCircle, 'tod': pt?.isha},
     ];
 
     return IslamicCard(
@@ -334,7 +335,7 @@ class AzanSettingsScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.alarm_on_rounded, color: AppColors.accentGold, size: 20),
+              const Icon(IconlyBold.timeCircle, color: AppColors.accentGold, size: 20),
               const SizedBox(width: 8),
               const Text(
                 'ওয়াক্ত অনুযায়ী আযান অন/অফ',
@@ -412,7 +413,7 @@ class AzanSettingsScreen extends StatelessWidget {
               color: AppColors.accentGold.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.nightlight_rounded, color: AppColors.accentGold, size: 22),
+            child: const Icon(IconlyBold.star, color: AppColors.accentGold, size: 22),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -496,7 +497,7 @@ class AzanSettingsScreen extends StatelessWidget {
                   color: isSelected ? AppColors.accentGold : Colors.transparent,
                 ),
                 child: isSelected
-                    ? const Icon(Icons.check, size: 18, color: Colors.black)
+                    ? const Icon(IconlyBold.tickSquare, size: 18, color: Colors.black)
                     : null,
               ),
               const SizedBox(width: 12),
@@ -603,7 +604,7 @@ class AzanSettingsScreen extends StatelessWidget {
                               ),
                             )
                           : Icon(
-                              isThisPlaying ? Icons.stop_rounded : Icons.play_arrow_rounded,
+                              isThisPlaying ? IconlyBold.closeSquare : IconlyBold.play,
                               color: isThisPlaying ? Colors.black87 : AppColors.accentGold,
                               size: 24,
                             ),
@@ -635,7 +636,7 @@ class AzanSettingsScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Row(
           children: [
-            Icon(Icons.stars_rounded, color: AppColors.accentGold),
+            Icon(IconlyBold.star, color: AppColors.accentGold),
             SizedBox(width: 8),
             Text('আযানের ফজিলত', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ],

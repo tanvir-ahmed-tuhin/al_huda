@@ -12,6 +12,10 @@ class StorageService {
   static const String _keyArabicFontSize = 'arabic_font_size';
   static const String _keySelectedCityIndex = 'selected_city_index';
   static const String _keyIsDarkMode = 'is_dark_mode';
+  static const String _keyUseLiveLocation = 'use_live_location';
+  static const String _keyLiveLatitude = 'live_latitude';
+  static const String _keyLiveLongitude = 'live_longitude';
+  static const String _keyLiveLocationName = 'live_location_name';
 
   static SharedPreferences? _prefs;
 
@@ -93,6 +97,25 @@ class StorageService {
   }
 
   static int getSelectedCityIndex() => _prefs?.getInt(_keySelectedCityIndex) ?? 0;
+
+  // Live Location Settings
+  static Future<void> saveLiveLocationState({
+    required bool isLive,
+    double? latitude,
+    double? longitude,
+    String? locationName,
+  }) async {
+    await init();
+    await _prefs?.setBool(_keyUseLiveLocation, isLive);
+    if (latitude != null) await _prefs?.setDouble(_keyLiveLatitude, latitude);
+    if (longitude != null) await _prefs?.setDouble(_keyLiveLongitude, longitude);
+    if (locationName != null) await _prefs?.setString(_keyLiveLocationName, locationName);
+  }
+
+  static bool getUseLiveLocation() => _prefs?.getBool(_keyUseLiveLocation) ?? false;
+  static double? getLiveLatitude() => _prefs?.getDouble(_keyLiveLatitude);
+  static double? getLiveLongitude() => _prefs?.getDouble(_keyLiveLongitude);
+  static String? getLiveLocationName() => _prefs?.getString(_keyLiveLocationName);
 
   // Dark Mode
   static Future<void> saveDarkMode(bool isDark) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import '../../models/surah_model.dart';
 import '../../providers/quran_provider.dart';
@@ -62,10 +63,10 @@ class _SurahListScreenState extends State<SurahListScreen> with SingleTickerProv
               onChanged: (val) => quranProvider.searchSurahs(val),
               decoration: InputDecoration(
                 hintText: 'সূরার নাম বা নম্বর দিয়ে খুঁজুন...',
-                prefixIcon: const Icon(Icons.search_rounded, color: AppColors.accentGold),
+                prefixIcon: const Icon(IconlyLight.search, color: AppColors.accentGold),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear_rounded, size: 18),
+                        icon: const Icon(IconlyLight.closeSquare, size: 18),
                         onPressed: () {
                           _searchController.clear();
                           quranProvider.searchSurahs('');
@@ -125,7 +126,7 @@ class _SurahListScreenState extends State<SurahListScreen> with SingleTickerProv
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.search_off_rounded, size: 56, color: AppColors.accentGold),
+            const Icon(IconlyLight.search, size: 56, color: AppColors.accentGold),
             const SizedBox(height: 12),
             Text(
               'কোনো সূরা পাওয়া যায়নি',
@@ -286,7 +287,7 @@ class _SurahListScreenState extends State<SurahListScreen> with SingleTickerProv
                 ),
               ),
               const Icon(
-                Icons.arrow_forward_ios_rounded,
+                IconlyLight.arrowRight2,
                 size: 16,
                 color: AppColors.accentGold,
               ),
@@ -305,7 +306,7 @@ class _SurahListScreenState extends State<SurahListScreen> with SingleTickerProv
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.bookmark_border_rounded, size: 64, color: AppColors.accentGold),
+            const Icon(IconlyLight.bookmark, size: 64, color: AppColors.accentGold),
             const SizedBox(height: 12),
             const Text(
               'কোনো বুকমার্ক সংরক্ষিত নেই',
