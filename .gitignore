@@ -4,6 +4,9 @@
 *.pyc
 *.swp
 .DS_Store
+._*
+.Spotlight-V100
+.Trashes
 .atom/
 .build/
 .buildlog/
@@ -30,7 +33,10 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+build/
+build
+.kotlin/
+**/android/.kotlin/
 /coverage/
 
 # Symbolication related

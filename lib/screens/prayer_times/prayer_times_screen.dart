@@ -261,11 +261,22 @@ class PrayerTimesScreen extends StatelessWidget {
     final nextName = PrayerTimeModel.getPrayerNameBangla(nextPrayer);
     final nextTime = PrayerService.formatTimeOfDayBangla(pt.getTimeForPrayer(nextPrayer));
     final duration = pt.timeUntilNextPrayer;
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes % 60;
-    final timeRemainingStr = hours > 0
-        ? '${PrayerService.toBanglaDigits(hours.toString())} ঘণ্টা ${PrayerService.toBanglaDigits(minutes.toString())} মিনিট বাকি'
-        : '${PrayerService.toBanglaDigits(minutes.toString())} মিনিট বাকি';
+    final totalSeconds = duration.isNegative ? 0 : duration.inSeconds;
+    final hours = totalSeconds ~/ 3600;
+    final minutes = (totalSeconds % 3600) ~/ 60;
+    final seconds = totalSeconds % 60;
+
+    final String timeRemainingStr;
+    if (hours > 0) {
+      timeRemainingStr =
+          '${PrayerService.toBanglaDigits(hours.toString())} ঘণ্টা ${PrayerService.toBanglaDigits(minutes.toString())} মি. ${PrayerService.toBanglaDigits(seconds.toString().padLeft(2, '0'))} সে. বাকি';
+    } else if (minutes > 0) {
+      timeRemainingStr =
+          '${PrayerService.toBanglaDigits(minutes.toString())} মিনিট ${PrayerService.toBanglaDigits(seconds.toString().padLeft(2, '0'))} সেকেন্ড বাকি';
+    } else {
+      timeRemainingStr =
+          '${PrayerService.toBanglaDigits(seconds.toString())} সেকেন্ড বাকি';
+    }
 
     return Container(
       width: double.infinity,

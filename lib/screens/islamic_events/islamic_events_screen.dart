@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../providers/islamic_events_provider.dart';
 import '../../services/prayer_service.dart';
@@ -242,10 +243,9 @@ class IslamicEventsScreen extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             event.arabicTitle,
-            style: const TextStyle(
-              fontSize: 16,
+            style: GoogleFonts.notoNaskhArabic(
+              fontSize: 20,
               color: AppColors.accentGold,
-              fontFamily: 'ScheherazadeNew',
               fontWeight: FontWeight.w600,
             ),
           ),

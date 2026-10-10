@@ -234,7 +234,7 @@ class IslamicNotificationService {
         body: body,
         scheduledDate: tzScheduled,
         notificationDetails: platformDetails,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.inexact,
         payload: payload,
       );
     } catch (e) {

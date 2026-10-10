@@ -12,12 +12,17 @@ class TaskService {
     const TaskItem(id: 'asr', title: 'আসরের নামাজ সময়মতো আদায়', category: 'নামাজ', points: 15),
     const TaskItem(id: 'maghrib', title: 'মাগরিবের নামাজ আদায়', category: 'নামাজ', points: 15),
     const TaskItem(id: 'isha', title: 'ইশার নামাজ ও বিতর আদায়', category: 'নামাজ', points: 15),
+    const TaskItem(id: 'tahajjud', title: 'তাহাজ্জুদ বা সালাতুত দুহা (চাশত) আদায়', category: 'নামাজ', points: 20),
     const TaskItem(id: 'quran_read', title: 'কমপক্ষে ১ পৃষ্ঠা কুরআন তিলাওয়াত', category: 'কুরআন', points: 20),
     const TaskItem(id: 'surah_mulk', title: 'রাতে সূরা আল-মুলক তিলাওয়াত', category: 'কুরআন', points: 25),
     const TaskItem(id: 'morning_dhikr', title: 'সকালের মাসনূন দোয়া ও জিকির', category: 'যিকির', points: 15),
     const TaskItem(id: 'evening_dhikr', title: 'সন্ধ্যার মাসনূন দোয়া ও জিকির', category: 'যিকির', points: 15),
+    const TaskItem(id: 'subhanallah_100', title: '১০০ বার সুবহানাল্লাহি ওয়া বিহামদিহি', category: 'যিকির', points: 15),
     const TaskItem(id: 'istighfar_100', title: '১০০ বার আস্তাগফিরুল্লাহ পাঠ', category: 'যিকির', points: 15),
+    const TaskItem(id: 'darood_100', title: 'নবীজি (ﷺ)-এর ওপর ১০০ বার দরূদ পাঠ', category: 'যিকির', points: 15),
     const TaskItem(id: 'sadaqah', title: 'সদকা বা কাউকে সাহায্য করা', category: 'নেক আমল', points: 20),
+    const TaskItem(id: 'parents_dua', title: 'পিতামাতার জন্য দোয়া ও খিদমত', category: 'নেক আমল', points: 15),
+    const TaskItem(id: 'miswak', title: 'নামাজের পূর্বে মিসওয়াক ও অজু বজায় রাখা', category: 'নেক আমল', points: 10),
   ];
 
   static Future<List<TaskItem>> loadTodayTasks() async {

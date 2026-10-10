@@ -20,6 +20,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  debugPrint('DEBUG: main() started');
 
   try {
     await Firebase.initializeApp(
@@ -30,9 +31,16 @@ void main() async {
   }
 
   await StorageService.init();
-  await IslamicNotificationService.init();
+  debugPrint('DEBUG: StorageService.init finished');
 
+  // Launch UI immediately so the first frame renders without blocking
   runApp(const AlQuranApp());
+  debugPrint('DEBUG: runApp executed');
+
+  // Initialize notifications asynchronously in the background
+  IslamicNotificationService.init().catchError((e) {
+    debugPrint('Error in IslamicNotificationService.init: $e');
+  });
 }
 
 class AlQuranApp extends StatelessWidget {

@@ -67,8 +67,8 @@ class PrayerProvider extends ChangeNotifier {
     // Auto-detect live location from GPS on startup
     _autoDetectLocationIfPermitted();
 
-    // Refresh every 30 seconds to update countdown & active prayer highlight
-    _timer = Timer.periodic(const Duration(seconds: 30), (_) {
+    // Refresh every second to update live countdown with seconds
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       _recalculate();
     });
   }

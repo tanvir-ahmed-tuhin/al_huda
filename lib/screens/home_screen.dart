@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_islamic_icons/flutter_islamic_icons.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
-import '../providers/azan_provider.dart';
 import '../providers/prayer_provider.dart';
 import '../providers/quran_provider.dart';
 import '../providers/theme_provider.dart';
@@ -17,12 +15,16 @@ import '../widgets/glass_card.dart';
 import '../widgets/upcoming_islamic_event_card.dart';
 import 'allah_names/allah_names_screen.dart';
 import 'duas/duas_screen.dart';
+import 'hadith/hadith_screen.dart';
 import 'islamic_events/islamic_events_screen.dart';
+import 'mosque/nearby_mosques_screen.dart';
 import 'prayer_times/azan_settings_screen.dart';
 import 'prayer_times/prayer_times_screen.dart';
 import 'profile/profile_screen.dart';
 import 'quran/surah_detail_screen.dart';
+import 'tasks/daily_tasks_screen.dart';
 import 'tasbih/tasbih_screen.dart';
+import 'zakat/zakat_calculator_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final Function(int) onNavigateTab;
@@ -68,10 +70,6 @@ class HomeScreen extends StatelessWidget {
 
                 // Last Read Resume Card
                 _buildLastReadCard(context, isDark),
-                const SizedBox(height: 18),
-
-                // Ayah of the Day
-                _buildAyahOfTheDay(context, isDark),
                 const SizedBox(height: 18),
 
                 // Popular Surahs Quick Access
@@ -349,8 +347,8 @@ class HomeScreen extends StatelessWidget {
             IconButton(
               icon: Icon(
                 themeProvider.isDarkMode
-                    ? IconlyBold.show
-                    : IconlyLight.show,
+                    ? Icons.dark_mode_rounded
+                    : Icons.light_mode_rounded,
                 color: AppColors.accentGold,
               ),
               onPressed: () => themeProvider.toggleTheme(),
@@ -375,12 +373,12 @@ class HomeScreen extends StatelessWidget {
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.2),
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.12)
+                          : AppColors.primary,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isAuth
-                            ? const Color(0xFF10B981)
-                            : AppColors.accentGold.withValues(alpha: 0.5),
+                        color: Colors.white.withValues(alpha: 0.35),
                         width: 1,
                       ),
                     ),
@@ -397,7 +395,7 @@ class HomeScreen extends StatelessWidget {
                               errorBuilder: (context, error, stackTrace) => const Icon(
                                 IconlyBold.profile,
                                 size: 18,
-                                color: Color(0xFF10B981),
+                                color: Colors.white,
                               ),
                             ),
                           )
@@ -405,17 +403,17 @@ class HomeScreen extends StatelessWidget {
                           const Icon(
                             IconlyBold.profile,
                             size: 18,
-                            color: AppColors.accentGold,
+                            color: Colors.white,
                           ),
                         const SizedBox(width: 5),
                         Text(
                           isAuth
                               ? (user?.name.split(' ').first ?? 'প্রোফাইল')
                               : 'প্রোফাইল',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.bold,
-                            color: isAuth ? const Color(0xFF10B981) : AppColors.accentGold,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -442,11 +440,22 @@ class HomeScreen extends StatelessWidget {
           pt.getTimeForPrayer(nextPrayer),
         );
         final duration = pt.timeUntilNextPrayer;
-        final hours = duration.inHours;
-        final minutes = duration.inMinutes % 60;
-        final timeRemainingStr = hours > 0
-            ? '${PrayerService.toBanglaDigits(hours.toString())} ঘণ্টা ${PrayerService.toBanglaDigits(minutes.toString())} মিনিট বাকি'
-            : '${PrayerService.toBanglaDigits(minutes.toString())} মিনিট বাকি';
+        final totalSeconds = duration.isNegative ? 0 : duration.inSeconds;
+        final hours = totalSeconds ~/ 3600;
+        final minutes = (totalSeconds % 3600) ~/ 60;
+        final seconds = totalSeconds % 60;
+
+        final String timeRemainingStr;
+        if (hours > 0) {
+          timeRemainingStr =
+              '${PrayerService.toBanglaDigits(hours.toString())} ঘণ্টা ${PrayerService.toBanglaDigits(minutes.toString())} মি. ${PrayerService.toBanglaDigits(seconds.toString().padLeft(2, '0'))} সে. বাকি';
+        } else if (minutes > 0) {
+          timeRemainingStr =
+              '${PrayerService.toBanglaDigits(minutes.toString())} মিনিট ${PrayerService.toBanglaDigits(seconds.toString().padLeft(2, '0'))} সেকেন্ড বাকি';
+        } else {
+          timeRemainingStr =
+              '${PrayerService.toBanglaDigits(seconds.toString())} সেকেন্ড বাকি';
+        }
 
         return Container(
           width: double.infinity,
@@ -482,17 +491,17 @@ class HomeScreen extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.accentGold.withValues(alpha: 0.2),
+                      color: Colors.white.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: AppColors.accentGold,
+                        color: Colors.white.withValues(alpha: 0.5),
                         width: 0.8,
                       ),
                     ),
                     child: const Text(
                       'পরবর্তী নামাজ',
                       style: TextStyle(
-                        color: AppColors.goldLight,
+                        color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                       ),
@@ -532,90 +541,28 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      timeRemainingStr,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.3),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        timeRemainingStr,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.end,
                       ),
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 14),
-              Consumer<AzanProvider>(
-                builder: (context, azanProvider, _) {
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const AzanSettingsScreen(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 7,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.25),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.accentGold.withValues(alpha: 0.35),
-                          width: 0.8,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                IconlyBold.voice,
-                                size: 16,
-                                color: AppColors.accentGold,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                'আযান কণ্ঠ: ${azanProvider.selectedVoice.muadhin}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          const Row(
-                            children: [
-                              SizedBox(width: 4),
-                              Icon(
-                                IconlyLight.arrowRight2,
-                                size: 10,
-                                color: AppColors.goldLight,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
               ),
             ],
           ),
@@ -678,22 +625,26 @@ class HomeScreen extends StatelessWidget {
       {
         'title': 'হাদিস শরিফ',
         'icon': FlutterIslamicIcons.solidMohammad,
-        'isComingSoon': true,
+        'onTap': () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HadithScreen())),
+        'isComingSoon': false,
       },
       {
         'title': 'যাকাত হিসাব',
         'icon': FlutterIslamicIcons.zakat,
-        'isComingSoon': true,
+        'onTap': () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ZakatCalculatorScreen())),
+        'isComingSoon': false,
       },
       {
         'title': 'কাছের মসজিদ',
         'icon': FlutterIslamicIcons.locationMosque,
-        'isComingSoon': true,
+        'onTap': () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NearbyMosquesScreen())),
+        'isComingSoon': false,
       },
       {
         'title': 'মাকবুল আমল',
         'icon': FlutterIslamicIcons.sajadah,
-        'isComingSoon': true,
+        'onTap': () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DailyTasksScreen())),
+        'isComingSoon': false,
       },
     ];
 
@@ -953,102 +904,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAyahOfTheDay(BuildContext context, bool isDark) {
-    final dailyAyah = QuranDataService.getDailyAyah();
-
-    return IslamicCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    IconlyBold.star,
-                    color: AppColors.accentGold,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    'আজকের আয়াত (আয়াতুল কুরসী)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: isDark
-                          ? AppColors.goldLight
-                          : AppColors.primaryDark,
-                    ),
-                  ),
-                ],
-              ),
-              IconButton(
-                icon: const Icon(
-                  IconlyLight.document,
-                  size: 18,
-                  color: AppColors.accentGold,
-                ),
-                tooltip: 'কপি করুন',
-                onPressed: () {
-                  Clipboard.setData(
-                    ClipboardData(
-                      text:
-                          '${dailyAyah.textArabic}\n\n${dailyAyah.translationBangla}\n[সূরা বাকারা: ২৫৫]',
-                    ),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('আয়াত ক্লিপবোর্ডে কপি করা হয়েছে'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          // Arabic Text
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: Text(
-              dailyAyah.textArabic,
-              textAlign: TextAlign.right,
-              style: AppTheme.arabicText(
-                fontSize: 21,
-                color: isDark ? Colors.white : AppColors.primaryDark,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Bengali Translation
-          Text(
-            dailyAyah.translationBangla,
-            style: AppTheme.banglaText(
-              fontSize: 14,
-              color: isDark
-                  ? AppColors.darkTextSecondary
-                  : AppColors.lightTextPrimary,
-            ),
-          ),
-          const SizedBox(height: 4),
-          const Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              '— সূরা আল-বাকারা, আয়াত ২৫৫',
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.accentGold,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildPopularSurahs(BuildContext context, bool isDark) {
     final popularSurahNumbers = [36, 55, 67, 18, 56, 112];

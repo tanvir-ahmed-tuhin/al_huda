@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../models/islamic_special_day_model.dart';
 import '../../providers/islamic_events_provider.dart';
@@ -128,9 +129,8 @@ class IslamicEventDetailScreen extends StatelessWidget {
                         const SizedBox(height: 8),
                         Text(
                           event.arabicTitle,
-                          style: const TextStyle(
-                            fontFamily: 'ScheherazadeNew',
-                            fontSize: 22,
+                          style: GoogleFonts.notoNaskhArabic(
+                            fontSize: 26,
                             color: AppColors.accentGold,
                             fontWeight: FontWeight.bold,
                           ),
@@ -556,9 +556,8 @@ class IslamicEventDetailScreen extends StatelessWidget {
                   Text(
                     amal.arabicDua!,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'ScheherazadeNew',
+                    style: GoogleFonts.notoNaskhArabic(
+                      fontSize: 22,
                       height: 1.8,
                       color: AppColors.accentGold,
                       fontWeight: FontWeight.w600,

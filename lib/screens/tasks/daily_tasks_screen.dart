@@ -6,6 +6,7 @@ import '../../providers/task_provider.dart';
 import '../../services/prayer_service.dart';
 import '../../theme/app_theme.dart';
 import '../../widgets/glass_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DailyTasksScreen extends StatelessWidget {
   const DailyTasksScreen({super.key});
@@ -17,7 +18,10 @@ class DailyTasksScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('দৈনিক আমল ট্র্যাকার'),
+        title: Text(
+          'মাকবুল আমল',
+          style: GoogleFonts.hindSiliguri(fontWeight: FontWeight.bold),
+        ),
         actions: [
           IconButton(
             icon: const Icon(IconlyLight.plus, color: AppColors.accentGold),
@@ -164,7 +168,7 @@ class DailyTasksScreen extends StatelessWidget {
                       Icon(IconlyBold.activity, size: 14, color: AppColors.accentGold),
                       SizedBox(width: 4),
                       Text(
-                        'দৈনিক আমল রুটিন',
+                        'মাকবুল আমল রুটিন',
                         style: TextStyle(
                           color: AppColors.goldLight,
                           fontSize: 11,
